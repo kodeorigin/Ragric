@@ -26,7 +26,6 @@ import { Alert, Button, Text, TextInput, View,
   const handleBack=() => {
     navigation.goBack()
   }
-
  
   const submitData = ()=>{	
 		if(country==""){
@@ -154,9 +153,9 @@ import { Alert, Button, Text, TextInput, View,
     theme={theme}
     mode="outlined"
     onChangeText={text => setAccountNumber(text)}
-  placeholder={'Enter bank account number'}
-  style={styles.input}
-   underlineColorAndroid={'transparent'}
+    placeholder={'Enter bank account number'}
+    style={styles.input}
+    underlineColorAndroid={'transparent'}
      />
     <Text style={styles.inputLabel}>Choose password</Text>
     <TextInput
