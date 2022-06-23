@@ -13,6 +13,9 @@ import SplashScreen from './Splash';
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
 import SigninType from './SigninType';
+import FarmerSignupTwo from './Farmers/SignupTwo';
+import WelcomeFarmer from './Farmers/WelcomeScreen';
+import MechanizationSignupTwo from './Mechanization/SignupTwo';
 
 export default class WelcomeScreen extends Component {
   

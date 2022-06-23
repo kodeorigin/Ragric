@@ -7,7 +7,7 @@ import { Alert, Button, Text, TextInput, View,ScrollView,
   import windowWidth from './../../../utils/Dimensions'
   import windowHeight from './../../../utils/Dimensions'
 
-const FarmerSigninType = ({})=>{
+const FinancialSigninType = ({})=>{
 
     const navigation = useNavigation(); 
     const { height, width } = useWindowDimensions();
@@ -21,46 +21,30 @@ const FarmerSigninType = ({})=>{
     <View style={styles.container}>
        
     <View style={styles.textStyleWrapper}>
-    <Text style={styles.textStyleBold}>Signup/Signin as </Text>  
-    <Text style={styles.textStyle}>Select the option that best describe you </Text>  
+    <Text style={styles.textStyleBold}>Which one best describes you? </Text>  
     </View>
-
+    <View style={styles.descriptionStyleWrapper}>
+    <Text style={styles.descriptionText}>Which one best describes you? </Text>  
+    </View>
     
     <View style={styles.buttonContainer}>
      <TouchableOpacity style={styles.buttonWrapper} activeOpacity={1} delayPressIn={100}
-     onPress={() => navigation.navigate("farmersignin")}>
+     onPress={() => navigation.navigate("investorsignin")}>
         <Image 
-        source={require('../../images/farmer.png')} 
+        source={require('../../images/investor.png')} 
         style={styles.icon}
         />
-    <Text style={styles.buttonText} >Farmer Registration </Text>  
+    <Text style={styles.buttonText} >Investors </Text>  
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.buttonWrapper} activeOpacity={1} delayPressIn={100}
-         onPress={() => navigation.navigate("suppliersignin")}>
-        <Image 
-        source={require('../../images/market.png')} 
-        style={styles.icon}
-        />
-    <Text style={styles.buttonText}>Input Supplier </Text>  
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonWrapper} activeOpacity={1} delayPressIn={100}
-        onPress={() => navigation.navigate("mechanizationsignin")}>
-        <Image 
-        source={require('../../images/mechanization.png')} 
-        style={styles.icon}
-        />
-    <Text style={styles.buttonText}>Mechanization Services </Text>  
-      </TouchableOpacity>  
-      <TouchableOpacity style={styles.buttonWrapper} activeOpacity={1} delayPressIn={100}
-        onPress={() => navigation.navigate("financialsignintype")}>
+         onPress={() => navigation.navigate("institutionsignin")}>
         <Image 
         source={require('../../images/finance.png')} 
         style={styles.icon}
         />
-    <Text style={styles.buttonText}>Financials </Text>  
-      </TouchableOpacity>            
+    <Text style={styles.buttonText}>Financial Institution </Text>  
+        </TouchableOpacity>           
     </View>
 
     </View>
@@ -84,9 +68,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width:windowWidth,
-    height:windowHeight,
+    minHeight:windowHeight,
     backgroundColor:'#EEFDE1',
-    width:windowWidth,
+    paddingBottom:'30%',
+
   },
   ScrollViewStyle:{
     minWidth:"100%",
@@ -94,15 +79,15 @@ const styles = StyleSheet.create({
   },
   ScrollViewContainer:{
     paddingTop:50,
-    paddingBottom:10,
     backgroundColor:'#EEFDE1',
 
   },
   textStyleWrapper:{
-    width:'80%',
+    width:'50%',
     marginLeft:'0%',
     marginTop:0,
     marginBottom:20,
+    shadowColor: '#',
   },
   textStyle:{
     fontSize:16,
@@ -115,12 +100,31 @@ const styles = StyleSheet.create({
   textStyleBold:{
     fontSize:22,
     color:'#000000',
-    lineHeight:25,
+    lineHeight:30,
     textAlign:'center',
     marginBottom:0,
     marginTop:50,
   },
-
+  descriptionStyleWrapper:{
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#fff',
+    width:'100%',
+    marginLeft:'0%',
+    marginTop:0,
+    marginBottom:0,
+    minHeight:120,
+  },
+  textStyle:{
+    fontSize:16,
+    color:'#000000',
+    lineHeight:25,
+    textAlign:'center',
+    marginBottom:20,
+    marginTop:30,
+  },
   buttonContainer:{
     display:'flex',
     flexDirection:'column',
@@ -165,4 +169,4 @@ padding: 16,
 
 })
 
-export default FarmerSigninType;
+export default FinancialSigninType;

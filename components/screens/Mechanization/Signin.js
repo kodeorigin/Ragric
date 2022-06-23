@@ -5,10 +5,11 @@ import { Alert, Button, Text, TextInput, View,
   import AsyncStorage from '@react-native-async-storage/async-storage';
 import windowWidth from '../../../utils/Dimensions'
 import windowHeight from '../../../utils/Dimensions'
-import { supplierLogin } from '../../../utils/Apis';
+import { mechanizationLogin } from '../../../utils/Apis';
 
-const SupplierSignin = ({navigation,route})=>{
+const MechanizationSignin = ({navigation,route})=>{
 
+  
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [modal,setModal] = useState(false)
@@ -17,14 +18,13 @@ const SupplierSignin = ({navigation,route})=>{
 
   const [isLoading,setIsloading] =useState(false)
 
-  const storeSupplierData = async () => {
+  const storeMechanizationData = async () => {
     try {
-      await AsyncStorage.setItem('semail', email);
+      await AsyncStorage.setItem('memail', email);
     } catch (e) {
       alert("couldn't sign you in, please try again");
     }
   }
-
   const submitData = ()=>{
 		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
 		if(email==""){
@@ -43,7 +43,7 @@ const SupplierSignin = ({navigation,route})=>{
 		}
 		else{
       setIsloading(true)
-		fetch(`${supplierLogin}`,{
+		fetch(`${mechanizationLogin}`,{
 			method:'POST',
 			header:{
 				'Accept': 'application/json',
@@ -61,8 +61,8 @@ const SupplierSignin = ({navigation,route})=>{
       setIsloading(false)
 			 if(responseJson == "Data Matched"){
 				 // redirect to profile page
-         storeSupplierData();
-				 navigation.navigate("supplierwelcome");
+         storeMechanizationData();
+				 navigation.navigate("mechanizationwelcome");
 			 }else{
 				 alert("Wrong Login Details");
 			 }
@@ -91,7 +91,7 @@ const SupplierSignin = ({navigation,route})=>{
                       <ActivityIndicator size="large" color="#00ff00" />
                   </View>
                   }
-    <Text style={styles.textStyle}>Input Supplier Sign in</Text>
+    <Text style={styles.textStyle}>Mechanization Sign in</Text>
     <Text style={styles.errorMessaage}>{message}</Text>
     <Text style={styles.inputLabel}>Email Address</Text>
     <TextInput
@@ -135,7 +135,7 @@ const SupplierSignin = ({navigation,route})=>{
     <View style={styles.buttomWrapper} >
         <Text style={styles.accountText}>Don't Have an Account? </Text>
         <Text style={styles.accountButton} 
-          onPress={() => navigation.navigate("suppliersignup")}
+          onPress={() => navigation.navigate("mechanizationsignup")}
 
         >Sign Up</Text>
     </View>
@@ -250,4 +250,4 @@ logo:{
       }
 })
 
-export default SupplierSignin;
+export default MechanizationSignin;

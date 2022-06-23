@@ -19,7 +19,7 @@ const SigninType = ({})=>{
     </View>
 
     <View style={styles.buttonContainer}>
-     <TouchableOpacity style={styles.buttonWrapper} 
+     <TouchableOpacity style={styles.buttonWrapper}  activeOpacity={1} delayPressIn={100}
      onPress={() => navigation.navigate("farmersignintype")}>
         <Image 
         source={require('../images/farmer.png')} 
@@ -28,7 +28,7 @@ const SigninType = ({})=>{
     <Text style={styles.buttonText} >Farmer/Supply Chain </Text>  
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonWrapper} 
+        <TouchableOpacity style={styles.buttonWrapper} activeOpacity={1} delayPressIn={100}
          onPress={() => navigation.navigate("farmersignin")}>
         <Image 
         source={require('../images/market.png')} 
@@ -37,10 +37,10 @@ const SigninType = ({})=>{
     <Text style={styles.buttonText}>Produce Market </Text>  
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonWrapper} 
+        <TouchableOpacity style={styles.buttonWrapper}  activeOpacity={1} delayPressIn={100}
         onPress={() => navigation.navigate("farmersignin")}>
         <Image 
-        source={require('../images/farmer.png')} 
+        source={require('../images/mapping.png')} 
         style={styles.icon}
         />
     <Text style={styles.buttonText}>Mapping Solution </Text>  

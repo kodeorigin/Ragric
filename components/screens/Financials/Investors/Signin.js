@@ -1,34 +1,98 @@
-import React, { Component,useState } from 'react';
+import React, { Component,useState,useCallback } from 'react';
 import { Alert, Button, Text, TextInput, View,
-   StyleSheet, Dimensions ,Image, TouchableOpacity,Modal,KeyboardAvoidingView, TouchableHighlight 
+   StyleSheet, ActivityIndicator ,Image, TouchableOpacity,Modal,KeyboardAvoidingView, TouchableHighlight,Keyboard 
   } from 'react-native';
-
-import windowWidth from './../../../utils/Dimensions'
-import windowHeight from './../../../utils/Dimensions'
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+import windowWidth from '../../../../utils/Dimensions'
+import windowHeight from '../../../../utils/Dimensions'
+import { investorLogin } from '../../../../utils/Apis';
 
 const InvestorSignin = ({navigation,route})=>{
 
-  const submitData = ()=>{
-    
-  }
-
-  const [email,setEmail] = useState("email")
-  const [password,setPassword] = useState("password")
+  const [email,setEmail] = useState("")
+  const [password,setPassword] = useState("")
   const [modal,setModal] = useState(false)
   const [enableshift,setenableShift] = useState(false)
+  const [message,setMessage] = useState("")
+
+  const [isLoading,setIsloading] =useState(false)
+
+  const storeInvestorData = async () => {
+    try {
+      await AsyncStorage.setItem('invemail', email);
+    } catch (e) {
+      alert("couldn't sign you in, please try again");
+    }
+  }
+
+  const submitData = ()=>{
+		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+		if(email==""){
+			//alert("Please enter Email address");
+      setMessage('Please enter Email address')
+		}
+		else if(reg.test(email) === false)
+		{
+		//alert("Email is Not Correct");
+    setMessage('Enter a valid email')
+		return false;
+		  }
+
+		else if(password==""){
+      setMessage('Please enter password')
+		}
+		else{
+      setIsloading(true)
+		fetch(`${investorLogin}`,{
+			method:'POST',
+			header:{
+				'Accept': 'application/json',
+				'Content-type': 'application/json'
+			},
+			body:JSON.stringify({
+				// we will pass our input data to server
+				email: email,
+				password: password
+			})
+			
+		})
+		.then((response) => response.json())
+		 .then((responseJson)=>{
+      setIsloading(false)
+			 if(responseJson == "Data Matched"){
+				 // redirect to profile page
+         storeInvestorData();
+				 navigation.navigate("investorwelcome");
+			 }else{
+				 alert("Wrong Login Details");
+			 }
+		 })
+		 .catch((error)=>{
+		 console.error(error);
+		 });
+		}
+		
+		
+		Keyboard.dismiss();
+  }
 
 
    return(
     <View style={styles.container}>
     <View style={styles.logocontainer}>
     <Image 
-    source={require('../../images/logo.png')} 
+    source={require('../../../images/logo.png')} 
     style={styles.logo}
    />
     <Text style={styles.logoText}>RAGRIC</Text>
     </View>
-    <Text style={styles.textStyle}>Investor Sign in</Text>
-
+    {isLoading &&
+                  <View style={styles.loading}>
+                      <ActivityIndicator size="large" color="#00ff00" />
+                  </View>
+                  }
+    <Text style={styles.textStyle}> Investor Sign in</Text>
+    <Text style={styles.errorMessaage}>{message}</Text>
     <Text style={styles.inputLabel}>Email Address</Text>
     <TextInput
         value={email}
@@ -38,6 +102,7 @@ const InvestorSignin = ({navigation,route})=>{
         onChangeText={text => setEmail(text)}
       placeholder={'Email Address'}
       style={styles.input}
+       underlineColorAndroid={'transparent'}
     />
     <Text style={styles.inputLabel}>Password</Text>
     <TextInput
@@ -49,6 +114,8 @@ const InvestorSignin = ({navigation,route})=>{
       placeholder={'Password'}
       secureTextEntry={true}
       style={styles.input}
+      underlineColorAndroid={'transparent'}
+
     />
     <View style={styles.buttonWrapper}>
      
@@ -67,9 +134,10 @@ const InvestorSignin = ({navigation,route})=>{
 
     <View style={styles.buttomWrapper} >
         <Text style={styles.accountText}>Don't Have an Account? </Text>
-        <Text style={styles.accountButton}
-          onPress={() => navigation.navigate("farmersignin")}
->Sign Up</Text>
+        <Text style={styles.accountButton} 
+          onPress={() => navigation.navigate("investorsignup")}
+
+        >Sign Up</Text>
     </View>
 
 
@@ -106,9 +174,8 @@ const styles = StyleSheet.create({
   inputLabel: {
     width: '95%',
     padding: 10,
- 
   },
-  buttonWrapper: {
+    buttonWrapper: {
     width: '70%',
     alignSelf: 'center',
     marginTop:10,
@@ -166,6 +233,21 @@ logo:{
       fontSize:15,
       textTransform:'uppercase',
         },
+        errorMessaage:{
+        color:'red',
+        fontSize:16,
+        },
+        loading: {
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          opacity: 0.5,
+          backgroundColor: '#EEFDE1',
+          justifyContent: 'center',
+          alignItems: 'center'
+      }
 })
 
 export default InvestorSignin;
